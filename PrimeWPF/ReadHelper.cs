@@ -10,7 +10,7 @@ namespace PrimeWPF
             var sb = new StringBuilder();
             while (true) 
             {
-                var newByte = f.ReadByte();
+                var newByte = TRB._f.ReadByte();
                 if (newByte == 0) break;
                 sb.Append((char)newByte);
             }
