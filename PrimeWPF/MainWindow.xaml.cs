@@ -41,12 +41,7 @@ namespace PrimeWPF
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            var worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
 
-            worker.RunWorkerAsync();
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)

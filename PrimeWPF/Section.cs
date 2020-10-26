@@ -18,32 +18,32 @@ namespace PrimeWPF
         public uint Uk4 { get; set; }
         public uint[] Padding { get; set; }
 
-        public Section(BinaryReader f)
+        public Section()
         {
-            Unknown = f.ReadUInt32();
-            var tempTextOffset = f.ReadUInt32();
-            Uk2 = f.ReadUInt32();
-            Uk3 = f.ReadUInt32();
-            SectionSize = f.ReadUInt32();
-            SectionSize2 = f.ReadUInt32();
-            SectionOffset = f.ReadUInt32();
-            Uk4 = f.ReadUInt32();
-            Padding = new uint[4] { f.ReadUInt32(), f.ReadUInt32(), f.ReadUInt32(), f.ReadUInt32() };
-            TextOffset = ReadHelper.ReadStringFromOffset(f, tempTextOffset + SectionOffset);
+            Unknown = TRB._f.ReadUInt32();
+            var tempTextOffset = TRB._f.ReadUInt32();
+            Uk2 = TRB._f.ReadUInt32();
+            Uk3 = TRB._f.ReadUInt32();
+            SectionSize = TRB._f.ReadUInt32();
+            SectionSize2 = TRB._f.ReadUInt32();
+            SectionOffset = TRB._f.ReadUInt32();
+            Uk4 = TRB._f.ReadUInt32();
+            Padding = new uint[4] { TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32() };
+            TextOffset = ReadHelper.ReadStringFromOffset(tempTextOffset + SectionOffset);
             Log.Information($"Section {TextOffset} has a size of {SectionSize}");
         }
 
-        public Section(BinaryReader f, uint textOffset)
+        public Section(uint textOffset)
         {
-            Unknown = f.ReadUInt32();
-            TextOffset = ReadHelper.ReadStringFromOffset(f, f.ReadUInt32() + textOffset);
-            Uk2 = f.ReadUInt32();
-            Uk3 = f.ReadUInt32();
-            SectionSize = f.ReadUInt32();
-            SectionSize2 = f.ReadUInt32();
-            SectionOffset = f.ReadUInt32();
-            Uk4 = f.ReadUInt32();
-            Padding = new uint[4] { f.ReadUInt32(), f.ReadUInt32(), f.ReadUInt32(), f.ReadUInt32() };
+            Unknown = TRB._f.ReadUInt32();
+            TextOffset = ReadHelper.ReadStringFromOffset(TRB._f.ReadUInt32() + textOffset);
+            Uk2 = TRB._f.ReadUInt32();
+            Uk3 = TRB._f.ReadUInt32();
+            SectionSize = TRB._f.ReadUInt32();
+            SectionSize2 = TRB._f.ReadUInt32();
+            SectionOffset = TRB._f.ReadUInt32();
+            Uk4 = TRB._f.ReadUInt32();
+            Padding = new uint[4] { TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32() };
             Log.Information($"Section {TextOffset} has a size of {SectionSize}");
         }
     }

@@ -5,7 +5,7 @@ namespace PrimeWPF
 {
     class ReadHelper
     {
-        public static string ReadString(BinaryReader f)
+        public static string ReadString()
         {
             var sb = new StringBuilder();
             while (true) 
@@ -17,12 +17,12 @@ namespace PrimeWPF
             return sb.ToString();
         }
 
-        public static string ReadStringFromOffset(BinaryReader f, uint offset)
+        public static string ReadStringFromOffset(uint offset)
         {
-            var pos = f.BaseStream.Position;
-            f.BaseStream.Seek(offset, SeekOrigin.Begin);
-            var str = ReadString(f);
-            f.BaseStream.Seek(pos, SeekOrigin.Begin);
+            var pos = TRB._f.BaseStream.Position;
+            TRB._f.BaseStream.Seek(offset, SeekOrigin.Begin);
+            var str = ReadString();
+            TRB._f.BaseStream.Seek(pos, SeekOrigin.Begin);
             return str;
         }
     }
