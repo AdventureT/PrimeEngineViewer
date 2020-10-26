@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace PrimeWPF
@@ -9,13 +7,14 @@ namespace PrimeWPF
     {
         public static string ReadString()
         {
-            var c = '\0';
-            var result = String.Empty;
-            while ((c = TRB._f.ReadChar()) != '\0')
+            var sb = new StringBuilder();
+            while (true) 
             {
-                result += c;
+                var newByte = f.ReadByte();
+                if (newByte == 0) break;
+                sb.Append((char)newByte);
             }
-            return result;
+            return sb.ToString();
         }
 
         public static string ReadStringFromOffset(uint offset)
