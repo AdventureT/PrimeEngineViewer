@@ -9,6 +9,7 @@ namespace PrimeWPF
 {
     class ReadHelper
     {
+        private static long _lastPos = -1;
         public static string ReadString()
         {
             var sb = new StringBuilder();
@@ -42,9 +43,14 @@ namespace PrimeWPF
 
         public static long SeekToOffset(uint offset)
         {
-            var pos = TRB._f.BaseStream.Position;
+            _lastPos = TRB._f.BaseStream.Position;
             TRB._f.BaseStream.Seek(offset, SeekOrigin.Begin);
-            return pos;
+            return _lastPos;
+        }
+
+        public static void ReturnToOrginalPosition()
+        {
+            if (_lastPos != -1) TRB._f.BaseStream.Seek(_lastPos, SeekOrigin.Begin);
         }
 
         public static Vector4 ReadVector4() => new Vector4(TRB._f.ReadSingle(), TRB._f.ReadSingle(), TRB._f.ReadSingle(), TRB._f.ReadSingle());

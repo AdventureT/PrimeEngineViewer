@@ -10,12 +10,14 @@ namespace PrimeWPF
     class TRB
     {
         public static BinaryReader _f;
+        public static string _fileName;
         private Header _header;
         public static List<Section> sections = new List<Section>();
         public static List<TagInfo> tagInfos = new List<TagInfo>();
 
         public TRB(string fileName)
         {
+            _fileName = fileName;
             Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt").CreateLogger();
             _f = new BinaryReader(File.Open(fileName, FileMode.Open));
             Read();
