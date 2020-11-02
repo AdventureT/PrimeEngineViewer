@@ -31,7 +31,7 @@ namespace PrimeWPF
 
         private void Read()
         {
-            _header = new Header(_f);
+            _header = new Header();
             _f.BaseStream.Seek(0x5C, SeekOrigin.Current); //Skip padding
             for (int i = 0; i < _header.DataInfoCount; i++)
             {
@@ -42,13 +42,14 @@ namespace PrimeWPF
                 tagInfos.Add(new TagInfo());
             }
             var dataSectionOffset = sections.Where(x => x.TextOffset == ".data").First().SectionOffset;
+            var pmdls = new List<object>();
             for (int i = 0; i < tagInfos.Count; i++)
             {
                 _f.BaseStream.Seek(tagInfos[i].Offset + dataSectionOffset, SeekOrigin.Begin);
                 switch (tagInfos[i].Name)
                 {
                     case "PMDL":
-                        var pmdl = new PMDL();
+                        pmdls.Add(new PMDL());
                         break;
                     default:
                         if (tagInfos[i].Name.First() == 'P')
@@ -63,6 +64,11 @@ namespace PrimeWPF
                         break;
                 }
             }
+            var content = new Content(pmdls);
+            content.ShowDialog();
+            ReadHelper._lastPos = 0;
+            sections.Clear();
+            tagInfos.Clear();
         }
     }
 }

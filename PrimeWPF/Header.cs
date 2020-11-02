@@ -19,18 +19,18 @@ namespace PrimeWPF
         public uint RelocationDataOffset { get; set; }
         public uint RelocationDataSize { get; set; }
 
-        public Header(BinaryReader f)
+        public Header()
         {
-            Signature = new string(f.ReadChars(4));
-            Version = f.ReadUInt32();
-            Flag1 = f.ReadUInt16();
-            Flag2 = f.ReadUInt16();
-            DataInfoCount = f.ReadUInt32();
-            DataInfoSize = f.ReadUInt32();
-            TagCount = f.ReadUInt32();
-            TagSize = f.ReadUInt32();
-            RelocationDataOffset = f.ReadUInt32();
-            RelocationDataSize = f.ReadUInt32();
+            Signature = new string(TRB._f.ReadChars(4));
+            Version = TRB._f.ReadUInt32();
+            Flag1 = TRB._f.ReadUInt16();
+            Flag2 = TRB._f.ReadUInt16();
+            DataInfoCount = TRB._f.ReadUInt32();
+            DataInfoSize = TRB._f.ReadUInt32();
+            TagCount = TRB._f.ReadUInt32();
+            TagSize = TRB._f.ReadUInt32();
+            RelocationDataOffset = TRB._f.ReadUInt32();
+            RelocationDataSize = TRB._f.ReadUInt32();
             Log.Information(Signature);
         }
     }

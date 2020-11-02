@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PrimeWPF
 {
-    class Tag
+    public class Tag
     {
         public string Name { get; set; }
         public uint Zero { get; set; }

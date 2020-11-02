@@ -9,7 +9,7 @@ namespace PrimeWPF
 {
     class ReadHelper
     {
-        private static long _lastPos = -1;
+        public static long _lastPos = -1;
         public static string ReadString()
         {
             var sb = new StringBuilder();

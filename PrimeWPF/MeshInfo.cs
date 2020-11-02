@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PrimeWPF
 {
-    class MeshInfo
+    public class MeshInfo
     {
         public uint CurrentPMDLOffset { get; set; }
         public ushort[] UK { get; set; }

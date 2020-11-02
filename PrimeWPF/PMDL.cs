@@ -7,11 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Media.Media3D;
 using SystemHalf;
 
 namespace PrimeWPF
 {
-    class PMDL : Tag
+    public class PMDL : Tag
     {
         public uint Unknown { get; set; }
         public uint Count { get; set; }
@@ -34,6 +35,13 @@ namespace PrimeWPF
         public uint PZero4 { get; private set; }
         public uint UnknownCount { get; private set; }
         public uint UnknownOffset { get; private set; }
+        public Mesh[] MeshData { get; set; }
+
+        ~PMDL()
+        {
+            MeshInfos.Clear();
+            MeshInfoOffsets.Clear();
+        }
 
         public PMDL() : base()
         {
@@ -82,25 +90,32 @@ namespace PrimeWPF
         private void ReadModelData()
         {
             var scene = new Scene();
+            MeshData = new Mesh[MeshInfosCount];
             for (int i = 0; i < MeshInfosCount; i++)
             {
                 var meshNode = new Node("Mesh");
-                var mesh = new Mesh();
-                meshNode.Entity = mesh;
+                MeshData[i] = new Mesh();
+                meshNode.Entity = MeshData[i];
                 scene.RootNode.AddChildNode(meshNode);
                 TRB._f.BaseStream.Seek(VertexBufferOffset + MeshInfos[i].VertexOffsetRelative + TRB.sections[2].SectionOffset, SeekOrigin.Begin);
                 for (int j = 0; j < MeshInfos[i].VertexCount; j++)
                 {
-                    mesh.ControlPoints.Add(new Vector4(Half.ToHalf(TRB._f.ReadUInt16()), Half.ToHalf(TRB._f.ReadUInt16()), Half.ToHalf(TRB._f.ReadUInt16()), Half.ToHalf(TRB._f.ReadUInt16())));
+                    MeshData[i].ControlPoints.Add(new Vector4(Half.ToHalf(TRB._f.ReadUInt16()), Half.ToHalf(TRB._f.ReadUInt16()), Half.ToHalf(TRB._f.ReadUInt16()), Half.ToHalf(TRB._f.ReadUInt16())));
                 }
+                TRB._f.BaseStream.Seek(VertexBufferOffset + MeshInfos[i].NormalUVOffset + TRB.sections[2].SectionOffset, SeekOrigin.Begin);
+                //VertexElementNormal elementNormal = mesh.CreateElement(VertexElementType.Normal, MappingMode.ControlPoint, ReferenceMode.Direct) as VertexElementNormal;
+                //for (int j = 0; j < MeshInfos[i].VertexCount; j++)
+                //{
+                //    elementNormal.Data.Add(new Vector4(TRB._f.ReadSingle(), TRB._f.ReadSingle(), TRB._f.ReadSingle()));
+                //}
                 TRB._f.BaseStream.Seek(VertexBufferOffset + MeshInfos[i].FaceOffset + MeshInfos[i].PreviousFaceCount*2 + TRB.sections[2].SectionOffset, SeekOrigin.Begin);
                 for (int j = 0; j < MeshInfos[i].FaceCount / 3; j++)
                 {
-                    mesh.CreatePolygon(new int[] { TRB._f.ReadUInt16(), TRB._f.ReadUInt16(), TRB._f.ReadUInt16() });
+                    MeshData[i].CreatePolygon(new int[] { TRB._f.ReadUInt16(), TRB._f.ReadUInt16(), TRB._f.ReadUInt16() });
                 }
-                meshNode.Transform.Rotation = Quaternion.FromRotation(new Vector3(0, 1, 0), new Vector3(180,0, 0));
+                meshNode.Transform.Rotation = Aspose.ThreeD.Utilities.Quaternion.FromRotation(new Vector3(0, 1, 0), new Vector3(180,0, 0));
             }
-            scene.Save($"{Path.GetDirectoryName(TRB._fileName)}\\{FullName}.fbx", FileFormat.FBX7400ASCII);
+            //scene.Save($"{Path.GetDirectoryName(TRB._fileName)}\\{FullName}.fbx", FileFormat.FBX7400ASCII);
         }
     }
 }

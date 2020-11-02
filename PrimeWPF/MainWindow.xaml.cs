@@ -30,12 +30,22 @@ namespace PrimeWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "TRB Files|*.trb";
+            openFileDialog.DefaultExt = ".trb";
+            openFileDialog.Title = "Select a trb file";
+            if ((bool)openFileDialog.ShowDialog())
+            {
+                var trb = new TRB(openFileDialog.FileName);
 
-            worker.RunWorkerAsync();
+            }
+            //(sender as BackgroundWorker).ReportProgress(100);
+            //var worker = new BackgroundWorker();
+            //worker.WorkerReportsProgress = true;
+            //worker.DoWork += worker_DoWork;
+            //worker.ProgressChanged += worker_ProgressChanged;
+
+            //worker.RunWorkerAsync();
             
         }
 
@@ -46,16 +56,16 @@ namespace PrimeWPF
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "TRB Files|*.trb";
-            openFileDialog.DefaultExt = ".trb";
-            openFileDialog.Title = "Select a trb file";
-            if ((bool)openFileDialog.ShowDialog())
-            {
-                var trb = new TRB(openFileDialog.FileName);
+            //var openFileDialog = new OpenFileDialog();
+            //openFileDialog.Filter = "TRB Files|*.trb";
+            //openFileDialog.DefaultExt = ".trb";
+            //openFileDialog.Title = "Select a trb file";
+            //if ((bool)openFileDialog.ShowDialog())
+            //{
+            //    var trb = new TRB(openFileDialog.FileName);
 
-            }
-            (sender as BackgroundWorker).ReportProgress(100);
+            //}
+            //(sender as BackgroundWorker).ReportProgress(100);
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
