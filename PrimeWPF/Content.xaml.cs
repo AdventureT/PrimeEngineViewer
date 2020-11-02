@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aspose.ThreeD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,33 @@ namespace PrimeWPF
         {
             var si = (string)treeView.SelectedItem;
             var chosenTag = (PMDL)Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ToArray()[0];
+            //var model = new GeometryModel3D();
+            //var mesh = new MeshGeometry3D();
+            //var scene = new Scene()
+            //foreach (var cp in chosenTag.CombinedMeshData.ControlPoints)
+            //{
+            //    mesh.Positions.Add(new Point3D(cp.x, cp.y, cp.z));
+            //}
+            //foreach (var i in chosenTag.CombinedMeshData.Polygons)
+            //{
+            //    mesh.TriangleIndices.Add(i[0]); mesh.TriangleIndices.Add(i[1]); mesh.TriangleIndices.Add(i[2]);
+            //}
+            //model.Geometry = mesh;
+            //var dm = new DiffuseMaterial();
+            //Color c = new Color
+            //{
+            //    ScA = 1,
+            //    ScB = 255,
+            //    ScR = 0,
+            //    ScG = 0
+            //};
+            //dm.Brush = new SolidColorBrush(c);
+            //model.Material = dm;
+            //modelGroup.Children.Add(model);
+            var st = new ScaleTransform3D();
             
+            var mg = new Model3DGroup();
+            myViewport.Children.Clear();
             foreach (var item in chosenTag.MeshData)
             {
                 var model = new GeometryModel3D();
@@ -63,21 +90,31 @@ namespace PrimeWPF
                     mesh.TriangleIndices.Add(i[0]); mesh.TriangleIndices.Add(i[1]); mesh.TriangleIndices.Add(i[2]);
                 }
                 model.Geometry = mesh;
-                var dm = new DiffuseMaterial();
-                Color c = new Color
+                var dm = new DiffuseMaterial
                 {
-                    ScA = 1,
-                    ScB = 255,
-                    ScR = 0,
-                    ScG = 0
+                    Brush = new SolidColorBrush(Color.FromRgb(166, 166, 166))
                 };
-                dm.Brush = new SolidColorBrush(c);
                 model.Material = dm;
-
-                modelGroup.Children.Add(model);
+                var dl = new DirectionalLight
+                {
+                    Color = Color.FromRgb(255, 255, 255),
+                    Direction = new Vector3D(-1, -1, -1)
+                };
+                var dl2 = new DirectionalLight
+                {
+                    Color = Color.FromRgb(255, 255, 255),
+                    Direction = new Vector3D(5, 5, 5)
+                };
+                mg.Children.Add(dl);
+                mg.Children.Add(dl2);
+                mg.Children.Add(model);
             }
-            
-            
+            var mv = new ModelVisual3D
+            {
+                Content = mg
+            };
+            myViewport.Children.Add(mv);
+
 
         }
     }

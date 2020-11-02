@@ -36,6 +36,7 @@ namespace PrimeWPF
         public uint UnknownCount { get; private set; }
         public uint UnknownOffset { get; private set; }
         public Mesh[] MeshData { get; set; }
+        public Mesh CombinedMeshData { get; set; }
 
         ~PMDL()
         {
@@ -91,6 +92,7 @@ namespace PrimeWPF
         {
             var scene = new Scene();
             MeshData = new Mesh[MeshInfosCount];
+            //var nodes = new List<Node>();
             for (int i = 0; i < MeshInfosCount; i++)
             {
                 var meshNode = new Node("Mesh");
@@ -114,7 +116,9 @@ namespace PrimeWPF
                     MeshData[i].CreatePolygon(new int[] { TRB._f.ReadUInt16(), TRB._f.ReadUInt16(), TRB._f.ReadUInt16() });
                 }
                 meshNode.Transform.Rotation = Aspose.ThreeD.Utilities.Quaternion.FromRotation(new Vector3(0, 1, 0), new Vector3(180,0, 0));
+                //nodes.Add(meshNode);
             }
+            CombinedMeshData = PolygonModifier.MergeMesh(scene);
             //scene.Save($"{Path.GetDirectoryName(TRB._fileName)}\\{FullName}.fbx", FileFormat.FBX7400ASCII);
         }
     }
