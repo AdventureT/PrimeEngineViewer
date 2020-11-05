@@ -115,6 +115,10 @@ namespace PrimeWPF
             };
             myViewport.Children.Add(mv);
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

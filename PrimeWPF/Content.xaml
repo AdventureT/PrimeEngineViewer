@@ -5,28 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrimeWPF"
         mc:Ignorable="d"
-        Title="Content" Height="450" Width="800">
+        Title="Content" Height="552" Width="978">
     <Grid Margin="0,0,532,0">
         <TreeView x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged"/>
-        <Grid Margin="273,0,-529,0" HorizontalAlignment="Center">
-            <ScrollBar Name="vscroll" 
-            Grid.Row="0"
+        <Grid Margin="273,0,-529,0" HorizontalAlignment="Center" RenderTransformOrigin="0.513,0.507">
+
+
+            <ScrollBar Name="vscroll"
             Orientation="Vertical"  
             Minimum="-180" Maximum="180" 
-            LargeChange="10" SmallChange="1" Value="0" Margin="497,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="397" />
+            LargeChange="10" SmallChange="1" Value="0" Margin="637,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="397" />
 
             <ScrollBar Name="hscroll" Grid.Column="0"
             Orientation="Horizontal" 
             Minimum="-180" Maximum="180" 
-            LargeChange="10" SmallChange="1" Value="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="421" Margin="39,0,0,10" />
+            LargeChange="10" SmallChange="1" Value="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="431" Margin="223,0,0,29" />
             <ScrollBar Name="zscroll" Grid.Column="0"
-            Orientation="Horizontal" 
-            Minimum="-180" Maximum="180" 
-            LargeChange="10" SmallChange="1" Value="0" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="436" />
-            <!-- Viewport3D is the rendering surface. -->
-            <Viewport3D Name="myViewport" Height="434" VerticalAlignment="Top" >
+            Orientation="Horizontal" Maximum="0" 
+            LargeChange="10" SmallChange="1" Value="-10" Margin="223,34,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="431" Minimum="-50" />
 
-                <!-- Add a camera. -->
+            <Viewport3D Name="myViewport" Height="434" VerticalAlignment="Center" Margin="225,0,32,0" >
+
                 <Viewport3D.Camera>
                     <PerspectiveCamera 
                         FarPlaneDistance="20" 
@@ -64,9 +63,8 @@
 
 
             </Viewport3D>
-
+            <Button Content="Export" HorizontalAlignment="Right" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="96" Click="Button_Click"/>
         </Grid>
     </Grid>
-
 
 </Window>
