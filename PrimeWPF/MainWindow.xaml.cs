@@ -23,6 +23,7 @@ namespace PrimeWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TRB _trb;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,42 +31,40 @@ namespace PrimeWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            var worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+
+            worker.RunWorkerAsync();
+
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var content = new Content(_trb.pmdls);
+            content.ShowDialog();
+        }
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            
+        }
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "TRB Files|*.trb";
             openFileDialog.DefaultExt = ".trb";
             openFileDialog.Title = "Select a trb file";
             if ((bool)openFileDialog.ShowDialog())
             {
-                var trb = new TRB(openFileDialog.FileName);
+                _trb = new TRB(openFileDialog.FileName);
 
             }
-            //(sender as BackgroundWorker).ReportProgress(100);
-            //var worker = new BackgroundWorker();
-            //worker.WorkerReportsProgress = true;
-            //worker.DoWork += worker_DoWork;
-            //worker.ProgressChanged += worker_ProgressChanged;
-
-            //worker.RunWorkerAsync();
-            
-        }
-
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-
-        }
-
-        void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //var openFileDialog = new OpenFileDialog();
-            //openFileDialog.Filter = "TRB Files|*.trb";
-            //openFileDialog.DefaultExt = ".trb";
-            //openFileDialog.Title = "Select a trb file";
-            //if ((bool)openFileDialog.ShowDialog())
-            //{
-            //    var trb = new TRB(openFileDialog.FileName);
-
-            //}
-            //(sender as BackgroundWorker).ReportProgress(100);
+            (sender as BackgroundWorker).ReportProgress(100);
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)

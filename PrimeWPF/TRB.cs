@@ -14,6 +14,7 @@ namespace PrimeWPF
         private Header _header;
         public static List<Section> sections = new List<Section>();
         public static List<TagInfo> tagInfos = new List<TagInfo>();
+        public List<object> pmdls = new List<object>();
 
         public TRB(string fileName)
         {
@@ -42,7 +43,6 @@ namespace PrimeWPF
                 tagInfos.Add(new TagInfo());
             }
             var dataSectionOffset = sections.Where(x => x.TextOffset == ".data").First().SectionOffset;
-            var pmdls = new List<object>();
             for (int i = 0; i < tagInfos.Count; i++)
             {
                 _f.BaseStream.Seek(tagInfos[i].Offset + dataSectionOffset, SeekOrigin.Begin);
@@ -64,8 +64,7 @@ namespace PrimeWPF
                         break;
                 }
             }
-            var content = new Content(pmdls);
-            content.ShowDialog();
+
             ReadHelper._lastPos = 0;
             sections.Clear();
             tagInfos.Clear();
