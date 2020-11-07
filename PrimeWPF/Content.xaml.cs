@@ -50,36 +50,12 @@ namespace PrimeWPF
         {
             var si = (string)treeView.SelectedItem;
             var chosenTag = (PMDL)Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ToArray()[0];
-            //var model = new GeometryModel3D();
-            //var mesh = new MeshGeometry3D();
-            //var scene = new Scene()
-            //foreach (var cp in chosenTag.CombinedMeshData.ControlPoints)
-            //{
-            //    mesh.Positions.Add(new Point3D(cp.x, cp.y, cp.z));
-            //}
-            //foreach (var i in chosenTag.CombinedMeshData.Polygons)
-            //{
-            //    mesh.TriangleIndices.Add(i[0]); mesh.TriangleIndices.Add(i[1]); mesh.TriangleIndices.Add(i[2]);
-            //}
-            //model.Geometry = mesh;
-            //var dm = new DiffuseMaterial();
-            //Color c = new Color
-            //{
-            //    ScA = 1,
-            //    ScB = 255,
-            //    ScR = 0,
-            //    ScG = 0
-            //};
-            //dm.Brush = new SolidColorBrush(c);
-            //model.Material = dm;
-            //modelGroup.Children.Add(model);
-            var st = new ScaleTransform3D();
-            
-            var mg = new Model3DGroup();
+            var scaleTransform = new ScaleTransform3D();
+            var modelGroup = new Model3DGroup();
             myViewport.Children.Clear();
             foreach (var item in chosenTag.MeshData)
             {
-                var model = new GeometryModel3D();
+                var geometryModel = new GeometryModel3D();
                 var mesh = new MeshGeometry3D();
                 foreach (var cp in item.ControlPoints)
                 {
@@ -89,37 +65,40 @@ namespace PrimeWPF
                 {
                     mesh.TriangleIndices.Add(i[0]); mesh.TriangleIndices.Add(i[1]); mesh.TriangleIndices.Add(i[2]);
                 }
-                model.Geometry = mesh;
-                var dm = new DiffuseMaterial
+                geometryModel.Geometry = mesh;
+                var diffuse = new DiffuseMaterial
                 {
                     Brush = new SolidColorBrush(Color.FromRgb(166, 166, 166))
                 };
-                model.Material = dm;
-                var dl = new DirectionalLight
+                geometryModel.Material = diffuse;
+                var directionalLight = new DirectionalLight
                 {
                     Color = Color.FromRgb(255, 255, 255),
                     Direction = new Vector3D(-1, -1, -1)
                 };
-                var dl2 = new DirectionalLight
+                var directionalLight2 = new DirectionalLight
                 {
                     Color = Color.FromRgb(255, 255, 255),
                     Direction = new Vector3D(5, 5, 5)
                 };
-                mg.Children.Add(dl);
-                mg.Children.Add(dl2);
-                mg.Children.Add(model);
+                modelGroup.Children.Add(directionalLight);
+                modelGroup.Children.Add(directionalLight2);
+                modelGroup.Children.Add(geometryModel);
             }
-            var mv = new ModelVisual3D
+            var modelVisual = new ModelVisual3D
             {
-                Content = mg
+                Content = modelGroup
             };
-            myViewport.Children.Add(mv);
+            myViewport.Children.Add(modelVisual);
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            var si = (string)treeView.SelectedItem;
+            var chosenTag = (PMDL)Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ToArray()[0];
+            var exportOptions = new ExportOptions(chosenTag);
+            exportOptions.ShowDialog();
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿<Window x:Class="PrimeWPF.ExportOptions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PrimeWPF"
+        mc:Ignorable="d"
+        Title="ExportOptions" Height="383" Width="276">
+    <Grid>
+        <CheckBox Content="Obj" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" x:Name="objCb" IsEnabled="false"/>
+        <CheckBox Content="Fbx" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" x:Name="fbxCb"/>
+        <Button Content="Export" Margin="0,207,0,0" Click="Button_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Height="25" Width="94"></Button>
+
+    </Grid>
+</Window>

@@ -55,14 +55,15 @@ namespace PrimeWPF
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "TRB Files|*.trb";
-            openFileDialog.DefaultExt = ".trb";
-            openFileDialog.Title = "Select a trb file";
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "TRB Files|*.trb",
+                DefaultExt = ".trb",
+                Title = "Select a trb file"
+            };
             if ((bool)openFileDialog.ShowDialog())
             {
                 _trb = new TRB(openFileDialog.FileName);
-
             }
             (sender as BackgroundWorker).ReportProgress(100);
         }

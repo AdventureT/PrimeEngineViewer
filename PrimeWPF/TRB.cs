@@ -52,15 +52,15 @@ namespace PrimeWPF
                         pmdls.Add(new PMDL());
                         break;
                     default:
-                        if (tagInfos[i].Name.First() == 'P')
-                        {
-                            var unknownTag = new Tag();
-                            Log.Information($"Unknown Tag found: {unknownTag.Name} filename is {unknownTag.FullName}");
-                        }
-                        else
-                        {
-                            Log.Information($"Unknown Tag found: {tagInfos[i].Name} filename is {tagInfos[i].FullName}");
-                        }
+                        //if (tagInfos[i].Name.First() == 'P')
+                        //{
+                        //    var unknownTag = new Tag();
+                        //    Log.Information($"Unknown Tag found: {unknownTag.Name} filename is {unknownTag.FullName}");
+                        //}
+                        //else
+                        //{
+                        //    Log.Information($"Unknown Tag found: {tagInfos[i].Name} filename is {tagInfos[i].FullName}");
+                        //}
                         break;
                 }
             }

@@ -10,12 +10,10 @@
         <TreeView x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged"/>
         <Grid Margin="273,0,-529,0" HorizontalAlignment="Center" RenderTransformOrigin="0.513,0.507">
 
-
             <ScrollBar Name="vscroll"
             Orientation="Vertical"  
             Minimum="-180" Maximum="180" 
             LargeChange="10" SmallChange="1" Value="0" Margin="637,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="397" />
-
             <ScrollBar Name="hscroll" Grid.Column="0"
             Orientation="Horizontal" 
             Minimum="-180" Maximum="180" 
