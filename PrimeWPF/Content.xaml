@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrimeWPF"
         mc:Ignorable="d"
-        Title="Content" Height="481" Width="923">
-    <Grid Margin="0,0,532,0">
-        <TreeView x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged"/>
-        <Grid Margin="273,0,-529,0" HorizontalAlignment="Center" RenderTransformOrigin="0.513,0.507" IsEnabled="False" x:Name="grid">
+        Title="Content" Height="699" Width="1566">
+    <Grid Margin="0,0,135,0">
+        <TreeView x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged" Margin="0,0,1116,0"/>
+        <Grid Margin="320,-24,0,24" HorizontalAlignment="Left" RenderTransformOrigin="0.513,0.507" IsEnabled="False" x:Name="grid">
 
             <ScrollBar Name="vscroll"
             Orientation="Vertical"  
@@ -64,7 +64,7 @@
             <Button Content="Export" HorizontalAlignment="Right" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="96" Click="Button_Click"/>
 
         </Grid>
-        <Image HorizontalAlignment="Left" Height="299" Margin="225,98,0,0" VerticalAlignment="Top" Width="378" x:Name="img"/>
+        <Image HorizontalAlignment="Left" Height="435" Margin="1015,78,0,0" VerticalAlignment="Top" Width="395" x:Name="img"/>
     </Grid>
 
 </Window>
