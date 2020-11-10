@@ -27,15 +27,19 @@ namespace PrimeWPF
             if (pmdls.Count > 0)
             {
                 Tags = pmdls;
-                var tvi = new TreeViewItem
+                var test = Tags.GroupBy(x => ((Tag)x).Name);
+                foreach (var item in test)
                 {
-                    Header = ((Tag)pmdls[0]).Name
-                };
-                foreach (Tag item in pmdls)
-                {
-                    tvi.Items.Add(item.FullName);
+                    var tvi = new TreeViewItem
+                    {
+                        Header = item.Key
+                    };
+                    foreach (var subItem in item)
+                    {
+                        tvi.Items.Add(((Tag)subItem).FullName);
+                    }
+                    treeView.Items.Add(tvi);
                 }
-                treeView.Items.Add(tvi);
             }
             
             
@@ -49,47 +53,57 @@ namespace PrimeWPF
         private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var si = (string)treeView.SelectedItem;
-            var chosenTag = (PMDL)Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ToArray()[0];
-            var scaleTransform = new ScaleTransform3D();
-            var modelGroup = new Model3DGroup();
-            myViewport.Children.Clear();
-            foreach (var item in chosenTag.MeshData)
+            
+            var ptex = Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PTEX").ToArray();
+            if (ptex.Count() != 0)
             {
-                var geometryModel = new GeometryModel3D();
-                var mesh = new MeshGeometry3D();
-                foreach (var cp in item.ControlPoints)
-                {
-                    mesh.Positions.Add(new Point3D(cp.x, cp.y, cp.z));
-                }
-                foreach (var i in item.Polygons)
-                {
-                    mesh.TriangleIndices.Add(i[0]); mesh.TriangleIndices.Add(i[1]); mesh.TriangleIndices.Add(i[2]);
-                }
-                geometryModel.Geometry = mesh;
-                var diffuse = new DiffuseMaterial
-                {
-                    Brush = new SolidColorBrush(Color.FromRgb(166, 166, 166))
-                };
-                geometryModel.Material = diffuse;
-                var directionalLight = new DirectionalLight
-                {
-                    Color = Color.FromRgb(255, 255, 255),
-                    Direction = new Vector3D(-1, -1, -1)
-                };
-                var directionalLight2 = new DirectionalLight
-                {
-                    Color = Color.FromRgb(255, 255, 255),
-                    Direction = new Vector3D(5, 5, 5)
-                };
-                modelGroup.Children.Add(directionalLight);
-                modelGroup.Children.Add(directionalLight2);
-                modelGroup.Children.Add(geometryModel);
+                img.Source = PTEX.loadBitmap(((PTEX)ptex[0]).Image);
             }
-            var modelVisual = new ModelVisual3D
+            var chosenTag = Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ToArray();
+            if (chosenTag.Count() != 0)
             {
-                Content = modelGroup
-            };
-            myViewport.Children.Add(modelVisual);
+                grid.IsEnabled = true;
+                var scaleTransform = new ScaleTransform3D();
+                var modelGroup = new Model3DGroup();
+                myViewport.Children.Clear();
+                foreach (var item in ((PMDL)chosenTag[0]).MeshData)
+                {
+                    var geometryModel = new GeometryModel3D();
+                    var mesh = new MeshGeometry3D();
+                    foreach (var cp in item.ControlPoints)
+                    {
+                        mesh.Positions.Add(new Point3D(cp.x, cp.y, cp.z));
+                    }
+                    foreach (var i in item.Polygons)
+                    {
+                        mesh.TriangleIndices.Add(i[0]); mesh.TriangleIndices.Add(i[1]); mesh.TriangleIndices.Add(i[2]);
+                    }
+                    geometryModel.Geometry = mesh;
+                    var diffuse = new DiffuseMaterial
+                    {
+                        Brush = new SolidColorBrush(Color.FromRgb(166, 166, 166))
+                    };
+                    geometryModel.Material = diffuse;
+                    var directionalLight = new DirectionalLight
+                    {
+                        Color = Color.FromRgb(255, 255, 255),
+                        Direction = new Vector3D(-1, -1, -1)
+                    };
+                    var directionalLight2 = new DirectionalLight
+                    {
+                        Color = Color.FromRgb(255, 255, 255),
+                        Direction = new Vector3D(5, 5, 5)
+                    };
+                    modelGroup.Children.Add(directionalLight);
+                    modelGroup.Children.Add(directionalLight2);
+                    modelGroup.Children.Add(geometryModel);
+                }
+                var modelVisual = new ModelVisual3D
+                {
+                    Content = modelGroup
+                };
+                myViewport.Children.Add(modelVisual);
+            }
 
         }
 

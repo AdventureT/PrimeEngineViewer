@@ -31,7 +31,7 @@ namespace PrimeWPF
             return str;
         }
 
-        public static byte[] ReadFromOffset(int bytesToRead, uint offset)
+        public static byte[] ReadFromOffset(uint bytesToRead, uint offset)
         {
             var pos = TRB._f.BaseStream.Position;
             TRB._f.BaseStream.Seek(offset, SeekOrigin.Begin);

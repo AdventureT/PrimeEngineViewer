@@ -44,7 +44,7 @@ namespace PrimeWPF
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            var content = new Content(_trb.pmdls);
+            var content = new Content(_trb._items);
             content.ShowDialog();
         }
 

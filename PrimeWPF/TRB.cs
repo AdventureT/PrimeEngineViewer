@@ -14,7 +14,7 @@ namespace PrimeWPF
         private Header _header;
         public static List<Section> sections = new List<Section>();
         public static List<TagInfo> tagInfos = new List<TagInfo>();
-        public List<object> pmdls = new List<object>();
+        public List<object> _items = new List<object>();
 
         public TRB(string fileName)
         {
@@ -49,8 +49,12 @@ namespace PrimeWPF
                 switch (tagInfos[i].Name)
                 {
                     case "PMDL":
-                        pmdls.Add(new PMDL());
+                        _items.Add(new PMDL());
                         break;
+                    case "PTEX":
+                        _items.Add(new PTEX());
+                        break;
+
                     default:
                         //if (tagInfos[i].Name.First() == 'P')
                         //{
@@ -64,7 +68,7 @@ namespace PrimeWPF
                         break;
                 }
             }
-
+            _f.Close();
             ReadHelper._lastPos = 0;
             sections.Clear();
             tagInfos.Clear();
