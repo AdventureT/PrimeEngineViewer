@@ -1,7 +1,6 @@
 ﻿using Aspose.ThreeD;
 using Aspose.ThreeD.Entities;
 using Aspose.ThreeD.Utilities;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
