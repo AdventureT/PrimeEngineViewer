@@ -1,12 +1,8 @@
-﻿//using KUtility;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -20,11 +16,12 @@ namespace PrimeWPF
         public uint DDSOffset { get; set; }
         public uint DDSSize { get; set; }
         public Bitmap Image { get; set; }
+        public byte[] RawImage { get; set; }
 
         [DllImport("gdi32")]
         static extern int DeleteObject(IntPtr o);
 
-        public static BitmapSource loadBitmap(System.Drawing.Bitmap source)
+        public static BitmapSource LoadBitmap(System.Drawing.Bitmap source)
         {
             IntPtr ip = source.GetHbitmap();
             BitmapSource bs = null;
@@ -51,8 +48,8 @@ namespace PrimeWPF
             DDSOffset = TRB._f.ReadUInt32();
             DDSSize = TRB._f.ReadUInt32();
 
-            var rawData = ReadHelper.ReadFromOffset(DDSSize, DDSOffset + TRB.sections.Where(x => x.TextOffset == "texmem").ToArray()[0].SectionOffset);
-            DDSImage img = new DDSImage(rawData);
+            RawImage = ReadHelper.ReadFromOffset(DDSSize, DDSOffset + TRB.sections.Where(x => x.TextOffset == "texmem").ToArray()[0].SectionOffset);
+            DDSImage img = new DDSImage(RawImage);
             Image = img.BitmapImage;
         }
     }

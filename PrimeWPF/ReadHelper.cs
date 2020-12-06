@@ -1,8 +1,6 @@
 ﻿using Aspose.ThreeD.Utilities;
 using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace PrimeWPF
@@ -22,11 +20,37 @@ namespace PrimeWPF
             return sb.ToString();
         }
 
+        public static string ReadUnicodeString()
+        {
+            var sb = new StringBuilder();
+            while (true)
+            {
+                var newByte = TRB._f.ReadByte();
+                var newByte2 = TRB._f.ReadByte();
+                if (newByte == 0 && newByte2 == 0) break;
+                var convertedChar = Encoding.Unicode.GetString(new byte[] { newByte, newByte2 });
+                sb.Append(convertedChar);
+            }
+            return sb.ToString();
+        }
+
         public static string ReadStringFromOffset(uint offset)
         {
             var pos = TRB._f.BaseStream.Position;
             TRB._f.BaseStream.Seek(offset, SeekOrigin.Begin);
-            var str = ReadString();
+            string str;
+            var intCheck = TRB._f.ReadUInt16();
+            if (intCheck <= 0xFF)
+            {
+                TRB._f.BaseStream.Seek(-2, SeekOrigin.Current);
+                str = ReadUnicodeString();
+            }
+            else
+            {
+                TRB._f.BaseStream.Seek(-2, SeekOrigin.Current);
+                str = ReadString();
+            }
+            
             TRB._f.BaseStream.Seek(pos, SeekOrigin.Begin);
             return str;
         }

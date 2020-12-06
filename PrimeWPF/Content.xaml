@@ -8,7 +8,7 @@
         Title="Content" Height="699" Width="1566">
     <Grid Margin="0,0,135,0">
         <TreeView x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged" Margin="0,0,1116,0"/>
-        <Grid Margin="320,-24,0,24" HorizontalAlignment="Left" RenderTransformOrigin="0.513,0.507" IsEnabled="False" x:Name="grid">
+        <Grid Margin="320,-24,0,24" HorizontalAlignment="Left" RenderTransformOrigin="0.513,0.507" x:Name="grid">
 
             <ScrollBar Name="vscroll"
             Orientation="Vertical"  
@@ -57,14 +57,28 @@
                     </PerspectiveCamera>
 
                 </Viewport3D.Camera>
+                <Viewport3D.Children>
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <DirectionalLight Color="#FFFFFF" Direction="-1,-1,-1" />
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <DirectionalLight Color="#FFFFFF" Direction="-5,-5,-5" />
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
 
+                </Viewport3D.Children>
 
 
             </Viewport3D>
-            <Button Content="Export" HorizontalAlignment="Right" Margin="0,0,0,4" VerticalAlignment="Bottom" Width="96" Click="Button_Click"/>
+            <Button Content="Export Model" HorizontalAlignment="Right" Margin="0,0,118,4" VerticalAlignment="Bottom" Width="98" Click="Button_Click" IsEnabled="False" x:Name="exportModelBtn"/>
+            <Button Content="Export Texture" HorizontalAlignment="Right" Margin="0,0,10,4" VerticalAlignment="Bottom" Width="103" Click="Button_Click_2" IsEnabled="False" x:Name="exportTextureBtn"/>
 
         </Grid>
         <Image HorizontalAlignment="Left" Height="435" Margin="1015,78,0,0" VerticalAlignment="Top" Width="395" x:Name="img"/>
+        <Button Content="Apply Texture to Current Model" HorizontalAlignment="Left" Margin="1130,635,0,0" VerticalAlignment="Top" Width="172" Click="Button_Click_1"/>
     </Grid>
 
 </Window>

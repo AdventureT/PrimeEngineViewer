@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="ExportOptions" Height="383" Width="276">
     <Grid>
-        <CheckBox Content="Obj" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" x:Name="objCb" IsEnabled="false"/>
-        <CheckBox Content="Fbx" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" x:Name="fbxCb"/>
+        <CheckBox Content="Obj" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" x:Name="objCb" IsEnabled="false" Visibility="Hidden"/>
+        <CheckBox Content="Fbx" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" x:Name="fbxCb" IsChecked="True" Visibility="Hidden"/>
         <Button Content="Export" Margin="0,207,0,0" Click="Button_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Height="25" Width="94"></Button>
+        <CheckBox Content="DDS" HorizontalAlignment="Left" Margin="119,168,0,0" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden" x:Name="ddsCb"/>
 
     </Grid>
 </Window>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Serilog;
 
 namespace PrimeWPF
@@ -20,7 +19,7 @@ namespace PrimeWPF
         {
             _fileName = fileName;
             Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt").CreateLogger();
-            _f = new BinaryReader(File.Open(fileName, FileMode.Open));
+            _f = new BinaryReader(File.Open(fileName, FileMode.Open, FileAccess.Read));
             Read();
         }
 
@@ -42,7 +41,7 @@ namespace PrimeWPF
             {
                 tagInfos.Add(new TagInfo());
             }
-            var dataSectionOffset = sections.Where(x => x.TextOffset == ".data").First().SectionOffset;
+            var dataSectionOffset = sections.First(x => x.TextOffset == ".data").SectionOffset;
             for (int i = 0; i < tagInfos.Count; i++)
             {
                 _f.BaseStream.Seek(tagInfos[i].Offset + dataSectionOffset, SeekOrigin.Begin);
@@ -54,17 +53,17 @@ namespace PrimeWPF
                     case "PTEX":
                         _items.Add(new PTEX());
                         break;
-
+                    case "\0\0\0\0":
+                        switch (tagInfos[i].FullName)
+                        {
+                            case "LocaleStrings":
+                                _items.Add(new LocaleStrings());
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
                     default:
-                        //if (tagInfos[i].Name.First() == 'P')
-                        //{
-                        //    var unknownTag = new Tag();
-                        //    Log.Information($"Unknown Tag found: {unknownTag.Name} filename is {unknownTag.FullName}");
-                        //}
-                        //else
-                        //{
-                        //    Log.Information($"Unknown Tag found: {tagInfos[i].Name} filename is {tagInfos[i].FullName}");
-                        //}
                         break;
                 }
             }

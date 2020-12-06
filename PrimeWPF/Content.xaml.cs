@@ -1,17 +1,9 @@
-﻿using Aspose.ThreeD;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
 
 namespace PrimeWPF
 {
@@ -27,6 +19,15 @@ namespace PrimeWPF
             if (pmdls.Count > 0)
             {
                 Tags = pmdls;
+                if (Tags.FirstOrDefault() is LocaleStrings)
+                {
+                    var tvi = new TreeViewItem
+                    {
+                        Header = "LocaleStrings"
+                    };
+                    treeView.Items.Add(tvi);
+                    return;
+                }
                 var test = Tags.GroupBy(x => ((Tag)x).Name);
                 foreach (var item in test)
                 {
@@ -45,30 +46,33 @@ namespace PrimeWPF
             
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
-
         private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            var si = (string)treeView.SelectedItem;
-            
+            var si = treeView.SelectedItem.ToString();
+            if (Tags.FirstOrDefault() is LocaleStrings)
+            {
+                LocalStringWindow lsw = new(Tags.First() as LocaleStrings);
+                lsw.ShowDialog();
+                return;
+            }
             var ptex = Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PTEX").ToArray();
             if (ptex.Count() != 0)
             {
-                img.Source = PTEX.loadBitmap(((PTEX)ptex[0]).Image);
+                exportTextureBtn.IsEnabled = true;
+                img.Source = PTEX.LoadBitmap(((PTEX)ptex[0]).Image);
+                img.Width = ((PTEX)ptex[0]).Image.Width;
+                img.Height = ((PTEX)ptex[0]).Image.Height;
             }
             var chosenTag = Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ToArray();
             if (chosenTag.Count() != 0)
             {
-                grid.IsEnabled = true;
-                var scaleTransform = new ScaleTransform3D();
+                exportModelBtn.IsEnabled = true;
                 var modelGroup = new Model3DGroup();
                 myViewport.Children.Clear();
+                var count = 0;
                 foreach (var item in ((PMDL)chosenTag[0]).MeshData)
                 {
-                    var geometryModel = new GeometryModel3D();
+                    var gm = new GeometryModel3D();
                     var mesh = new MeshGeometry3D();
                     foreach (var cp in item.ControlPoints)
                     {
@@ -78,26 +82,37 @@ namespace PrimeWPF
                     {
                         mesh.TriangleIndices.Add(i[0]); mesh.TriangleIndices.Add(i[1]); mesh.TriangleIndices.Add(i[2]);
                     }
-                    geometryModel.Geometry = mesh;
+                    foreach (var i in ((PMDL)chosenTag[0]).Normals[count])
+                    {
+                        mesh.Normals.Add(new Vector3D(i.x, i.y, i.z));
+                    }
+                    foreach (var i in ((PMDL)chosenTag[0]).Uvs[count])
+                    {
+                        mesh.TextureCoordinates.Add(new Point(i.x, i.y));
+                    }
+                    gm.Geometry = mesh;
                     var diffuse = new DiffuseMaterial
                     {
                         Brush = new SolidColorBrush(Color.FromRgb(166, 166, 166))
                     };
-                    geometryModel.Material = diffuse;
-                    var directionalLight = new DirectionalLight
-                    {
-                        Color = Color.FromRgb(255, 255, 255),
-                        Direction = new Vector3D(-1, -1, -1)
-                    };
-                    var directionalLight2 = new DirectionalLight
-                    {
-                        Color = Color.FromRgb(255, 255, 255),
-                        Direction = new Vector3D(5, 5, 5)
-                    };
-                    modelGroup.Children.Add(directionalLight);
-                    modelGroup.Children.Add(directionalLight2);
-                    modelGroup.Children.Add(geometryModel);
+                    gm.Material = diffuse;
+
+
+                    modelGroup.Children.Add(gm);
+                    count++;
                 }
+                var directionalLight = new DirectionalLight
+                {
+                    Color = Color.FromRgb(255, 255, 255),
+                    Direction = new Vector3D(-1, -1, -1)
+                };
+                var directionalLight2 = new DirectionalLight
+                {
+                    Color = Color.FromRgb(255, 255, 255),
+                    Direction = new Vector3D(5, 5, 5)
+                };
+                modelGroup.Children.Add(directionalLight);
+                modelGroup.Children.Add(directionalLight2);
                 var modelVisual = new ModelVisual3D
                 {
                     Content = modelGroup
@@ -109,10 +124,46 @@ namespace PrimeWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var si = (string)treeView.SelectedItem;
-            var chosenTag = (PMDL)Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ToArray()[0];
+            var si = treeView.SelectedItem.ToString();
+            var chosenTag = (PMDL)Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PMDL").ElementAtOrDefault(0);
+            if (chosenTag == null) return;
             var exportOptions = new ExportOptions(chosenTag);
             exportOptions.ShowDialog();
         }
+
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            var si = treeView.SelectedItem.ToString();
+            var chosenTag = (PTEX)Tags.Where(x => ((Tag)x).FullName == si && ((Tag)x).Name == "PTEX").ElementAtOrDefault(0);
+            if (chosenTag == null) return;
+            var exportOptions = new ExportOptions(chosenTag);
+            exportOptions.ShowDialog();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var diffuse = new DiffuseMaterial
+            {
+                Brush = new ImageBrush(img.Source)
+            };
+            var mg = (Model3DGroup)((ModelVisual3D)myViewport.Children[0]).Content;
+            var gms = mg.Children.OfType<GeometryModel3D>();
+            MeshSelection meshSelection = new MeshSelection(gms.Count());
+            meshSelection.ShowDialog();
+            var chosenMeshes = meshSelection.ChosenMeshes;
+            ChangeMaterial(diffuse, chosenMeshes);
+        }
+
+        private void ChangeMaterial(DiffuseMaterial material, List<int> chosenMeshes)
+        {
+            var mg = (Model3DGroup)((ModelVisual3D)myViewport.Children[0]).Content;
+            var gms = mg.Children.OfType<GeometryModel3D>();
+            foreach (var i in chosenMeshes)
+            {
+                gms.ElementAt(i).Material = material;
+            }
+        }
+
     }
 }
