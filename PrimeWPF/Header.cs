@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-namespace PrimeWPF
+﻿namespace PrimeWPF
 {
     class Header
     {
@@ -27,7 +25,6 @@ namespace PrimeWPF
             TagSize = TRB._f.ReadUInt32();
             RelocationDataOffset = TRB._f.ReadUInt32();
             RelocationDataSize = TRB._f.ReadUInt32();
-            Log.Information(Signature);
         }
     }
 }

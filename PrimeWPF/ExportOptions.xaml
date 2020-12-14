@@ -11,6 +11,7 @@
         <CheckBox Content="Fbx" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" x:Name="fbxCb" IsChecked="True" Visibility="Hidden"/>
         <Button Content="Export" Margin="0,207,0,0" Click="Button_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Height="25" Width="94"></Button>
         <CheckBox Content="DDS" HorizontalAlignment="Left" Margin="119,168,0,0" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden" x:Name="ddsCb"/>
+        <CheckBox Content="Havok 2010" HorizontalAlignment="Center" Margin="0,188,0,0" VerticalAlignment="Top" IsChecked="True" Visibility="Hidden" x:Name="havokCb"/>
 
     </Grid>
 </Window>

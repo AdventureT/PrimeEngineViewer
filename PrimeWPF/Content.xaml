@@ -7,22 +7,22 @@
         mc:Ignorable="d"
         Title="Content" Height="699" Width="1566">
     <Grid Margin="0,0,135,0">
-        <TreeView x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged" Margin="0,0,1116,0"/>
-        <Grid Margin="320,-24,0,24" HorizontalAlignment="Left" RenderTransformOrigin="0.513,0.507" x:Name="grid">
+        <TreeView x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged" HorizontalAlignment="Left" Width="315"/>
+        <Grid Margin="320,0,0,0" HorizontalAlignment="Left" RenderTransformOrigin="0.513,0.507" x:Name="grid" VerticalAlignment="Center" Height="655" Width="641">
 
             <ScrollBar Name="vscroll"
             Orientation="Vertical"  
             Minimum="-180" Maximum="180" 
-            LargeChange="10" SmallChange="1" Value="0" Margin="637,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="397" />
-            <ScrollBar Name="hscroll" Grid.Column="0"
+            LargeChange="10" SmallChange="1" Value="0" Margin="614,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="397" />
+            <ScrollBar Name="hscroll"
             Orientation="Horizontal" 
             Minimum="-180" Maximum="180" 
-            LargeChange="10" SmallChange="1" Value="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="431" Margin="223,0,0,29" />
+            LargeChange="10" SmallChange="1" Value="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="430" Margin="0,564,0,0" />
             <ScrollBar Name="zscroll" Grid.Column="0"
             Orientation="Horizontal" Maximum="0" 
-            LargeChange="10" SmallChange="1" Value="-10" Margin="223,34,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="431" Minimum="-50" />
+            LargeChange="10" SmallChange="1" Value="-10" Margin="102,108,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="432" Minimum="-50" />
 
-            <Viewport3D Name="myViewport" Height="434" VerticalAlignment="Center" Margin="225,0,32,0" >
+            <Viewport3D Name="myViewport" Height="434" VerticalAlignment="Center" Margin="27,0,0,0" HorizontalAlignment="Left" Width="582" >
 
                 <Viewport3D.Camera>
                     <PerspectiveCamera 

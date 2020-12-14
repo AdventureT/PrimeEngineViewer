@@ -24,6 +24,10 @@ namespace PrimeWPF
                 objCb.Visibility = Visibility.Visible;
                 fbxCb.Visibility = Visibility.Visible;
             }
+            else if (Data is PCOL)
+            {
+                havokCb.Visibility = Visibility.Visible;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -83,7 +87,6 @@ namespace PrimeWPF
             }
             else if (Data is PTEX)
             {
-                ddsCb.Visibility = Visibility.Visible;
                 var ptex = Data as PTEX;
                 var saveFileDialog = new SaveFileDialog
                 {
@@ -101,7 +104,27 @@ namespace PrimeWPF
                     }
                 }
             }
-            
+            else if (Data is PCOL)
+            {
+                var pcol = Data as PCOL;
+                var saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Havok File|*.hkx",
+                    DefaultExt = ".hkx",
+                    Title = "Save as hkx file",
+                    FileName = pcol.FullName
+                };
+                if ((bool)saveFileDialog.ShowDialog())
+                {
+                    Close();
+                    using (BinaryWriter writer = new BinaryWriter(File.Open($"{saveFileDialog.FileName}", FileMode.Create)))
+                    {
+                        writer.Write(pcol.CollisionFile);
+                    }
+                }
+            }
+
+
         }
     }
 }

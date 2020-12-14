@@ -13,6 +13,7 @@ namespace PrimeWPF
         private Header _header;
         public static List<Section> sections = new List<Section>();
         public static List<TagInfo> tagInfos = new List<TagInfo>();
+        public static List<ReversedTagInfo> reversedTagInfos = new List<ReversedTagInfo>();
         public List<object> _items = new List<object>();
 
         public TRB(string fileName)
@@ -41,6 +42,10 @@ namespace PrimeWPF
             {
                 tagInfos.Add(new TagInfo());
             }
+            for (int i = 0; i < sections[1].ReversedTagCount; i++)
+            {
+                reversedTagInfos.Add(new ReversedTagInfo());
+            }
             var dataSectionOffset = sections.First(x => x.TextOffset == ".data").SectionOffset;
             for (int i = 0; i < tagInfos.Count; i++)
             {
@@ -52,6 +57,9 @@ namespace PrimeWPF
                         break;
                     case "PTEX":
                         _items.Add(new PTEX());
+                        break;
+                    case "PCOL":
+                        _items.Add(new PCOL());
                         break;
                     case "\0\0\0\0":
                         switch (tagInfos[i].FullName)

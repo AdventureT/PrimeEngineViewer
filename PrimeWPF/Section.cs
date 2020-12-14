@@ -1,8 +1,4 @@
-﻿using Serilog;
-using System;
-using System.IO;
-
-namespace PrimeWPF
+﻿namespace PrimeWPF
 {
     class Section
     {
@@ -14,7 +10,10 @@ namespace PrimeWPF
         public uint SectionSize2 { get; set; }
         public uint SectionOffset { get; set; }
         public uint Uk4 { get; set; }
-        public uint[] Padding { get; set; }
+        public uint Uk5 { get; set; }
+        public uint Zero { get; set; }
+        public uint ReversedTagCount { get; set; }
+        public uint ReversedTagsOffset { get; set; }
 
         public Section()
         {
@@ -26,9 +25,11 @@ namespace PrimeWPF
             SectionSize2 = TRB._f.ReadUInt32();
             SectionOffset = TRB._f.ReadUInt32();
             Uk4 = TRB._f.ReadUInt32();
-            Padding = new uint[4] { TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32() };
+            Uk5 = TRB._f.ReadUInt32();
+            Zero = TRB._f.ReadUInt32();
+            ReversedTagCount = TRB._f.ReadUInt32();
+            ReversedTagsOffset = TRB._f.ReadUInt32();
             TextOffset = ReadHelper.ReadStringFromOffset(tempTextOffset + SectionOffset);
-            Log.Information($"Section {TextOffset} has a size of {SectionSize}");
         }
 
         public Section(uint textOffset)
@@ -41,8 +42,10 @@ namespace PrimeWPF
             SectionSize2 = TRB._f.ReadUInt32();
             SectionOffset = TRB._f.ReadUInt32();
             Uk4 = TRB._f.ReadUInt32();
-            Padding = new uint[4] { TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32() };
-            Log.Information($"Section {TextOffset} has a size of {SectionSize}");
+            Uk5 = TRB._f.ReadUInt32();
+            Zero = TRB._f.ReadUInt32();
+            ReversedTagCount = TRB._f.ReadUInt32();
+            ReversedTagsOffset = TRB._f.ReadUInt32();
         }
     }
 }

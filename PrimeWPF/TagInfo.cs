@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-namespace PrimeWPF
+﻿namespace PrimeWPF
 {
     class TagInfo
     {
@@ -15,7 +13,6 @@ namespace PrimeWPF
             Offset = TRB._f.ReadUInt32();
             Flag = TRB._f.ReadUInt32();
             FullName = ReadHelper.ReadStringFromOffset(TRB.sections[0].SectionOffset + TRB._f.ReadUInt32());
-            Log.Information($"Tag name: {FullName}");
         }
     }
 }

@@ -5,6 +5,7 @@
         public uint CurrentPMDLOffset { get; set; }
         public ushort[] UK { get; set; }
         public uint[] UK2 { get; set; }
+        public PTEX PTEXREF { get; set; }
         public uint VertexCount { get; set; }
         public uint UK3 { get; set; }
         public uint PreviousFaceCount { get; set; }
@@ -19,7 +20,15 @@
         {
             CurrentPMDLOffset = TRB._f.ReadUInt32();
             UK = new ushort[] { TRB._f.ReadUInt16(), TRB._f.ReadUInt16() };
-            UK2 = new uint[] { TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32(), TRB._f.ReadUInt32() };
+            UK2 = new uint[] { TRB._f.ReadUInt32(), TRB._f.ReadUInt32() };
+            var ptexOffset = TRB._f.ReadUInt32();
+            if (ptexOffset != 0)
+            {
+                ReadHelper.SeekToOffset(ptexOffset + TRB.sections[1].SectionOffset);
+                PTEXREF = new PTEX();
+                ReadHelper.ReturnToOrginalPosition();
+            }
+            TRB._f.ReadUInt32();
             VertexCount = TRB._f.ReadUInt32();
             UK3 = TRB._f.ReadUInt32();
             PreviousFaceCount = TRB._f.ReadUInt32();
