@@ -56,20 +56,19 @@ namespace PrimeWPF
                 Properties = new();
             }
         } ;
-        public abstract class EntityProperty
-        {
-        }
 
-        public class EntityProperty<T> : EntityProperty
+        public class EntityProperty
         {
             public string Name { get; set; }
             public PropertyType Type { get; set; }
-            public T Value { get; set; }
-            public EntityProperty(string name, PropertyType type, T value)
+            public object Value { get; set; }
+            public uint Position { get; set; }
+            public EntityProperty(string name, PropertyType type, object value)
             {
                 Name = name;
                 Type = type;
                 Value = value;
+                Position = (uint)TRB._f.BaseStream.Position - 12;
             }
             public override string ToString()
             {
@@ -97,25 +96,25 @@ namespace PrimeWPF
                     switch (propType)
                     {
                         case PropertyType.INT:
-                            EntityInfos[i].Properties.Add(new EntityProperty<int>(entName, propType, TRB._f.ReadInt32()));
+                            EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, TRB._f.ReadInt32()));
                             break;
                         case PropertyType.UINT:
-                            EntityInfos[i].Properties.Add(new EntityProperty<int>(entName, propType, TRB._f.ReadInt32()));
+                            EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, TRB._f.ReadInt32()));
                             break;
                         case PropertyType.FLOAT:
-                            EntityInfos[i].Properties.Add(new EntityProperty<float>(entName, propType, TRB._f.ReadSingle()));
+                            EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, TRB._f.ReadSingle()));
                             break;
                         case PropertyType.BOOL:
-                            EntityInfos[i].Properties.Add(new EntityProperty<bool>(entName, propType, TRB._f.ReadBoolean()));
+                            EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, TRB._f.ReadBoolean()));
                             TRB._f.BaseStream.Seek(3, SeekOrigin.Current);
                             break;
                         case PropertyType.TEXTOFFSET:
                             var offset = TRB._f.ReadUInt32();
-                            if (offset == 0) EntityInfos[i].Properties.Add(new EntityProperty<string>(entName, propType, "N/A"));
-                            else EntityInfos[i].Properties.Add(new EntityProperty<string>(entName, propType, ReadHelper.ReadStringFromOffset(TRB._f, offset + TRB.sections[0].SectionOffset)));
+                            if (offset == 0) EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, "N/A"));
+                            else EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, ReadHelper.ReadStringFromOffset(TRB._f, offset + TRB.sections[0].SectionOffset)));
                             break;
                         case PropertyType.VECTOR4:
-                            EntityInfos[i].Properties.Add(new EntityProperty<Vector4>(entName, propType, ReadHelper.ReadVector4FromOffset(TRB._f, TRB._f.ReadUInt32())));
+                            EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, ReadHelper.ReadVector4FromOffset(TRB._f, TRB._f.ReadUInt32())));
                             break;
                         case PropertyType.Unknown2:
                             break;
@@ -124,10 +123,10 @@ namespace PrimeWPF
                         case PropertyType.Unknown4:
                             break;
                         case PropertyType.OFFSET:
-                            EntityInfos[i].Properties.Add(new EntityProperty<int>(entName, propType, TRB._f.ReadInt32()));
+                            EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, TRB._f.ReadInt32()));
                             break;
                         default:
-                            EntityInfos[i].Properties.Add(new EntityProperty<int>(entName, propType, TRB._f.ReadInt32()));
+                            EntityInfos[i].Properties.Add(new EntityProperty(entName, propType, TRB._f.ReadInt32()));
                             break;
                     }
                 }
