@@ -24,9 +24,9 @@
             var ptexOffset = TRB._f.ReadUInt32();
             if (ptexOffset != 0)
             {
-                ReadHelper.SeekToOffset(ptexOffset + TRB.sections[1].SectionOffset);
+                ReadHelper.SeekToOffset(TRB._f, ptexOffset + TRB.sections[1].SectionOffset);
                 PTEXREF = new PTEX();
-                ReadHelper.ReturnToOrginalPosition();
+                ReadHelper.ReturnToOrginalPosition(TRB._f);
             }
             TRB._f.ReadUInt32();
             VertexCount = TRB._f.ReadUInt32();

@@ -17,7 +17,7 @@ namespace PrimeWPF
             TRB._f.BaseStream.Seek(TRB.sections[1].SectionOffset, System.IO.SeekOrigin.Begin);
             for (int i = 0; i < StringCount; i++)
             {
-                Strings.Add(ReadHelper.ReadStringFromOffset(TRB._f.ReadUInt32() + TRB.sections[1].SectionOffset));
+                Strings.Add(ReadHelper.ReadStringFromOffset(TRB._f, TRB._f.ReadUInt32() + TRB.sections[1].SectionOffset));
             }
         }
     }

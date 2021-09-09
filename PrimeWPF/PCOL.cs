@@ -23,7 +23,7 @@ namespace PrimeWPF
             CollsionInfo = TRB._f.ReadUInt32();
             var collsionFileOffset = TRB._f.ReadUInt32();
             CollisionFileSize = TRB._f.ReadUInt32();
-            CollisionFile = ReadHelper.ReadFromOffset(CollisionFileSize, collsionFileOffset + TRB.sections[1].SectionOffset);
+            CollisionFile = ReadHelper.ReadFromOffset(TRB._f, CollisionFileSize, collsionFileOffset + TRB.sections[1].SectionOffset);
             TRB._f.BaseStream.Seek(CollsionInfo + TRB.sections[1].SectionOffset, System.IO.SeekOrigin.Begin);
             for (int i = 0; i < CollisionCount; i++)
             {

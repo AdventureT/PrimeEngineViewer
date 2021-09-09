@@ -49,7 +49,7 @@ namespace PrimeWPF
             DDSSize = TRB._f.ReadUInt32();
 
 
-            RawImage = ReadHelper.ReadFromOffset(DDSSize, DDSOffset + TRB.sections.Where(x => x.TextOffset == "texmem").ToArray()[0].SectionOffset);
+            RawImage = ReadHelper.ReadFromOffset(TRB._f, DDSSize, DDSOffset + TRB.sections.Where(x => x.TextOffset == "texmem").ToArray()[0].SectionOffset);
             DDSImage img = new DDSImage(RawImage);
             Image = img.BitmapImage;
         }

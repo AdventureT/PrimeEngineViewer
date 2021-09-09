@@ -1,0 +1,82 @@
+﻿<Window x:Class="PrimeWPF.Entities"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PrimeWPF"
+        mc:Ignorable="d"
+        Title="Entities" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TreeView Grid.Column="0" x:Name="treeView" SelectedItemChanged="treeView_SelectedItemChanged" ></TreeView>
+        <StackPanel Margin="6" Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label>Position</Label>
+                <Label Grid.Column="1" HorizontalContentAlignment="Right" >X:</Label>
+                <TextBox x:Name="posX" Grid.Column="2"></TextBox>
+                <Label Grid.Column="3" HorizontalContentAlignment="Right" >Y:</Label>
+                <TextBox x:Name="posY" Grid.Column="4"></TextBox>
+                <Label Grid.Column="5" HorizontalContentAlignment="Right" >Z:</Label>
+                <TextBox Grid.Column="6" x:Name="posZ"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label>Scale</Label>
+                <Label Grid.Column="1" HorizontalContentAlignment="Right" >X:</Label>
+                <TextBox x:Name="scaleX" Grid.Column="2"></TextBox>
+                <Label Grid.Column="3" HorizontalContentAlignment="Right" >Y:</Label>
+                <TextBox x:Name="scaleY" Grid.Column="4"></TextBox>
+                <Label Grid.Column="5" HorizontalContentAlignment="Right" >Z:</Label>
+                <TextBox Grid.Column="6" x:Name="scaleZ"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label>Rotation</Label>
+                <Label Grid.Column="1" HorizontalContentAlignment="Right" >X:</Label>
+                <TextBox x:Name="rotX" Grid.Column="2"></TextBox>
+                <Label Grid.Column="3" HorizontalContentAlignment="Right" >Y:</Label>
+                <TextBox x:Name="rotY" Grid.Column="4"></TextBox>
+                <Label Grid.Column="5" HorizontalContentAlignment="Right" >Z:</Label>
+                <TextBox Grid.Column="6" x:Name="rotZ"></TextBox>
+            </Grid>
+            <Grid Margin="250 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Click="Button_Click">Save</Button>
+            </Grid>
+        </StackPanel>
+        
+    </Grid>
+</Window>

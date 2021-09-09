@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Serilog;
 
 namespace PrimeWPF
@@ -20,7 +21,7 @@ namespace PrimeWPF
         {
             _fileName = fileName;
             Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt").CreateLogger();
-            _f = new BinaryReader(File.Open(fileName, FileMode.Open, FileAccess.Read));
+             _f = new BinaryReader(File.Open(fileName, FileMode.Open, FileAccess.Read));
             Read();
         }
 
@@ -52,6 +53,9 @@ namespace PrimeWPF
                 _f.BaseStream.Seek(tagInfos[i].Offset + dataSectionOffset, SeekOrigin.Begin);
                 switch (tagInfos[i].Name)
                 {
+                    case "BTEC":
+                        //_items.Add();
+                        break;
                     case "PMDL":
                         _items.Add(new PMDL());
                         break;
@@ -60,6 +64,9 @@ namespace PrimeWPF
                         break;
                     case "PCOL":
                         _items.Add(new PCOL());
+                        break;
+                    case "enti":
+                        _items.Add(new enti());
                         break;
                     case "\0\0\0\0":
                         switch (tagInfos[i].FullName)

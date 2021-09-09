@@ -30,8 +30,16 @@ namespace PrimeWPF
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            var content = new Content(_trb._items);
-            content.ShowDialog();
+            if (_trb._items[0] is enti)
+            {
+                new Entities(_trb._items[0] as enti).Show();
+            }
+            else
+            {
+                var content = new Content(_trb._items);
+                content.ShowDialog();
+            }
+            
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)

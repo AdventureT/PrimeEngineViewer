@@ -52,7 +52,7 @@ namespace PrimeWPF
             Count = TRB._f.ReadUInt32();
             var headerPos = TRB._f.BaseStream.Position;
             TRB._f.BaseStream.Seek(TRB._f.ReadUInt32() + TRB.sections[1].SectionOffset, SeekOrigin.Begin);
-            UnknownVector4s = new Vector4[] { ReadHelper.ReadVector4(), ReadHelper.ReadVector4() };
+            UnknownVector4s = new Vector4[] { ReadHelper.ReadVector4(TRB._f), ReadHelper.ReadVector4(TRB._f) };
             MeshInfosCount = TRB._f.ReadUInt32();
             MeshInfoOffsetsOffset = TRB._f.ReadUInt32();
             //ReadHelper.SeekToOffset(TRB._f.ReadUInt32() + TRB.sections[1].SectionOffset);
@@ -82,12 +82,12 @@ namespace PrimeWPF
             TRB._f.BaseStream.Seek(headerPos+4, SeekOrigin.Begin);
             PZero = TRB._f.ReadUInt32();
             PZero2 = TRB._f.ReadUInt32();
-            ReadHelper.SeekToOffset(TRB._f.ReadUInt32() + TRB.sections[1].SectionOffset);
+            ReadHelper.SeekToOffset(TRB._f, TRB._f.ReadUInt32() + TRB.sections[1].SectionOffset);
             BoneCount = TRB._f.ReadUInt32();
             BoneDataOffset = TRB._f.ReadUInt32();
             BoneNamesOffset = TRB._f.ReadUInt32();
             BoneParentsOffset = TRB._f.ReadUInt32();
-            ReadHelper.ReturnToOrginalPosition();
+            ReadHelper.ReturnToOrginalPosition(TRB._f);
             VertexCount = TRB._f.ReadUInt32();
             VertexBufferSize = TRB._f.ReadUInt32();
             VertexBufferOffset = TRB._f.ReadUInt32();

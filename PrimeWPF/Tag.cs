@@ -19,7 +19,7 @@
             RelocationDataCount = TRB._f.ReadUInt16();
             Size = TRB._f.ReadUInt16();
             Zero2 = TRB._f.ReadUInt32();
-            FullName = ReadHelper.ReadStringFromOffset(TRB._f.ReadUInt32() + TRB.sections[0].SectionOffset);
+            FullName = ReadHelper.ReadStringFromOffset(TRB._f, TRB._f.ReadUInt32() + TRB.sections[0].SectionOffset);
             Hash = TRB._f.ReadUInt32();
             Zero3 = TRB._f.ReadUInt32();
             Zero4 = TRB._f.ReadUInt32();

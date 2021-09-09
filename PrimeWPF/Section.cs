@@ -29,13 +29,13 @@
             Zero = TRB._f.ReadUInt32();
             ReversedTagCount = TRB._f.ReadUInt32();
             ReversedTagsOffset = TRB._f.ReadUInt32();
-            TextOffset = ReadHelper.ReadStringFromOffset(tempTextOffset + SectionOffset);
+            TextOffset = ReadHelper.ReadStringFromOffset(TRB._f, tempTextOffset + SectionOffset);
         }
 
         public Section(uint textOffset)
         {
             Unknown = TRB._f.ReadUInt32();
-            TextOffset = ReadHelper.ReadStringFromOffset(TRB._f.ReadUInt32() + textOffset);
+            TextOffset = ReadHelper.ReadStringFromOffset(TRB._f, TRB._f.ReadUInt32() + textOffset);
             Uk2 = TRB._f.ReadUInt32();
             Uk3 = TRB._f.ReadUInt32();
             SectionSize = TRB._f.ReadUInt32();
