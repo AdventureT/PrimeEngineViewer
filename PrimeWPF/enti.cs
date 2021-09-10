@@ -68,7 +68,7 @@ namespace PrimeWPF
                 Name = name;
                 Type = type;
                 Value = value;
-                Position = (uint)TRB._f.BaseStream.Position - 12;
+                Position = value is bool ? (uint)TRB._f.BaseStream.Position - 9 : (uint)TRB._f.BaseStream.Position - 12;
             }
             public override string ToString()
             {
